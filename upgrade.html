@@ -11,6 +11,15 @@
     .muted{color:#6b7280}
     a.button{display:inline-block;background:#111827;color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none}
   </style>
+
+  <script>
+    // Set this to the Stripe LIVE Payment Link URL when available.
+    // Example: https://buy.stripe.com/xxxx
+    const LIVE_PAYMENT_LINK_URL = "";
+    if (LIVE_PAYMENT_LINK_URL) {
+      window.location.replace(LIVE_PAYMENT_LINK_URL);
+    }
+  </script>
 </head>
 <body>
   <h1>Upgrade to Pro</h1>
