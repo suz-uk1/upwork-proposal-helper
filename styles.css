@@ -63,3 +63,9 @@ pre.template{white-space:pre-wrap;background:#070a16;border:1px solid rgba(255,2
 .fade-in{opacity:0;transform:translateY(6px)}
 .fade-in.is-in{opacity:1;transform:translateY(0);transition:opacity 200ms ease, transform 200ms ease}
 @media (prefers-reduced-motion: reduce){.btn:hover{transform:none}.fade-in{opacity:1;transform:none}}
+
+.ctaRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+@media (max-width: 520px){
+  .ctaRow{flex-wrap:nowrap}
+  .ctaRow .btn{flex:1;justify-content:center}
+}
