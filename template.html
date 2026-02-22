@@ -4,21 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Proposal Template | Upwork Proposal Helper</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:900px;margin:40px auto;padding:0 16px;line-height:1.7}
-    .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin:16px 0}
-    .muted{color:#6b7280}
-    pre{white-space:pre-wrap;background:#0b1020;color:#e5e7eb;padding:14px;border-radius:12px;overflow:auto}
-    a.btn{display:inline-block;background:#111827;color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none}
-  </style>
+  <meta name="description" content="Copy/paste a beginner-safe Upwork proposal template (2-phase plan + 3 questions max)." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Upwork Proposal Template (copy/paste)</h1>
-  <p class="muted">Beginner-safe structure to reduce scope misunderstandings.</p>
+  <div class="container">
+    <div class="card hero fade-in">
+      <div class="muted small">Copy/paste template</div>
+      <h1 class="h1" style="font-size:38px;">Upwork proposal template</h1>
+      <p class="muted">A simple structure: understanding → 2-phase plan → 3 questions → next step.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn" id="copyBtn" type="button">Copy template</button>
+        <a class="btn btn--ghost" href="index.html">Back</a>
+      </div>
+    </div>
 
-  <div class="card">
-    <h2>Template</h2>
-    <pre>HI! I READ YOUR POST FOR: [JOB TITLE]
+    <div class="card fade-in" style="margin-top:14px;">
+      <h2 class="h2">Template</h2>
+      <pre class="template" id="tpl">HI! I READ YOUR POST FOR: [JOB TITLE]
 
 WHAT I UNDERSTAND
 - [bullet]
@@ -36,20 +39,36 @@ PLAN (2 phases)
 
 NEXT STEP
 If you share links/assets, I’ll reply with a concrete Phase 1 milestone plan today.</pre>
+      <div class="muted small" id="copied" style="margin-top:10px;"></div>
+    </div>
+
+    <div class="card fade-in" style="margin-top:14px;">
+      <h2 class="h2">Want this auto-generated?</h2>
+      <p class="muted">Upwork Proposal Helper extracts job details and generates this structure locally in your browser.</p>
+      <a class="btn" href="https://chromewebstore.google.com/">Get the extension</a>
+      <div class="muted small" style="margin-top:8px;">(Replace the CWS link with the exact listing URL after confirmation.)</div>
+    </div>
+
+    <p class="muted small" style="margin-top:14px;">Last updated: 2026-02-22</p>
   </div>
 
-  <div class="card">
-    <h2>Want this auto-generated?</h2>
-    <p>Upwork Proposal Helper is a Chrome extension that extracts the job details and generates this structure locally in your browser.</p>
-    <p><a class="btn" href="https://chromewebstore.google.com/">Open Chrome Web Store</a></p>
-    <p class="muted">(Replace with the exact CWS link after listing update is live.)</p>
-  </div>
-
-  <div class="card">
-    <h2>Support</h2>
-    <p>Email: <a href="mailto:hszk410.dev@gmail.com">hszk410.dev@gmail.com</a></p>
-  </div>
-
-  <p class="muted">Last updated: 2026-02-22</p>
+  <script>
+    const tpl = document.getElementById('tpl');
+    const btn = document.getElementById('copyBtn');
+    const copied = document.getElementById('copied');
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(tpl.textContent);
+        copied.textContent = 'Copied!';
+        setTimeout(() => copied.textContent = '', 1500);
+      } catch (e) {
+        copied.textContent = 'Copy failed. Select the text and copy manually.';
+      }
+    });
+    const els = document.querySelectorAll('.fade-in');
+    requestAnimationFrame(() => {
+      els.forEach((el, i) => setTimeout(() => el.classList.add('is-in'), 40 * i));
+    });
+  </script>
 </body>
 </html>

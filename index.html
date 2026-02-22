@@ -4,99 +4,93 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Upwork Proposal Helper</title>
-  <meta name="description" content="Upwork Proposal Helper is a Chrome extension that helps generate structured proposal drafts from job details. Subscription-based Pro plan available." />
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:860px;margin:40px auto;padding:0 16px;line-height:1.6}
-    .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin:16px 0}
-    h1{margin:0 0 8px}
-    code{background:#f3f4f6;padding:2px 6px;border-radius:6px}
-    .muted{color:#6b7280}
-  </style>
+  <meta name="description" content="Generate paste-ready Upwork proposals from job details in seconds. Local-only. Free daily limit. Pro adds templates, saved presets & history." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Upwork Proposal Helper</h1>
-  <p class="muted">Chrome extension • Subscription (Pro) available</p>
+  <div class="container">
+    <div class="card hero fade-in" id="hero">
+      <div class="kv">
+        <div>
+          <div class="muted small">Chrome extension • Subscription (Pro) available</div>
+          <h1 class="h1">Upwork proposals that are clear, structured, and paste‑ready.</h1>
+          <p class="muted">Extract job details → generate a beginner-safe proposal structure → copy & paste. Runs locally in your browser.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn" href="https://chromewebstore.google.com/">Get the extension</a>
+            <a class="btn btn--ghost" href="template.html">Copy/paste template</a>
+          </div>
+          <div class="badges">
+            <span class="badge badge--ok">Local-only</span>
+            <span class="badge">No external APIs</span>
+            <span class="badge badge--accent">3 questions max</span>
+            <span class="badge">2-phase plan</span>
+          </div>
+          <div class="muted small" style="margin-top:8px;">(Replace the CWS link with the exact listing URL after confirmation.)</div>
+        </div>
+      </div>
+    </div>
 
-  <div class="card">
-    <h2>What it is</h2>
-    <p>
-      Upwork Proposal Helper is a Chrome extension that helps freelancers draft structured Upwork proposals.
-      It extracts the job title/description from the Upwork job page and generates a clear proposal draft in the browser.
-    </p>
+    <div class="grid grid-2" style="margin-top:14px;">
+      <div class="card fade-in">
+        <h2 class="h2">How it works (3 steps)</h2>
+        <div class="steps">
+          <div class="step"><div class="stepNum">1</div><div>Open an Upwork job detail page</div></div>
+          <div class="step"><div class="stepNum">2</div><div>Click <b>Generate proposal</b></div></div>
+          <div class="step"><div class="stepNum">3</div><div>Copy & paste into your Upwork proposal</div></div>
+        </div>
+        <hr class="sep" />
+        <p class="muted small">If extraction fails, paste the job description manually and generate anyway.</p>
+      </div>
+
+      <div class="card fade-in">
+        <h2 class="h2">Examples (before → after)</h2>
+        <ul>
+          <li><b>VA / Admin</b>: messy job post → clear 2-phase plan + 3 questions</li>
+          <li><b>Web dev</b>: vague requirements → milestones + risk-reducing Phase 1</li>
+          <li><b>Data entry</b>: long description → bullets + deliverables + timeline</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="margin-top:14px;">
+      <h2 class="h2">FAQ</h2>
+      <details open>
+        <summary><b>Does it send my job text to a server?</b></summary>
+        <div class="muted">No — job content is processed locally in your browser.</div>
+      </details>
+      <details>
+        <summary><b>What if extraction fails?</b></summary>
+        <div class="muted">Paste the job description manually and generate anyway.</div>
+      </details>
+      <details>
+        <summary><b>Paid but still Free?</b></summary>
+        <div class="muted">Open the extension → Settings → Re-sync Pro. If still failing, re-enter license then Re-sync again.</div>
+      </details>
+    </div>
+
+    <div class="grid" style="margin-top:14px;">
+      <div class="card fade-in">
+        <h2 class="h2">Links</h2>
+        <ul>
+          <li><a href="upgrade.html">Upgrade</a></li>
+          <li><a href="manage.html">Manage subscription</a></li>
+          <li><a href="help.html">Help</a></li>
+          <li><a href="troubleshooting.html">Troubleshooting</a></li>
+          <li><a href="tokushoho.html">Specified Commercial Transactions Act (特定商取引法)</a></li>
+        </ul>
+        <div class="muted small">Support: <a href="mailto:hszk410.dev@gmail.com">hszk410.dev@gmail.com</a></div>
+      </div>
+    </div>
+
+    <p class="muted small" style="margin-top:14px;">Last updated: 2026-02-22</p>
   </div>
 
-  <div class="card">
-    <h2>Pricing</h2>
-    <ul>
-      <li>Free plan: limited daily generations</li>
-      <li>Pro plan: $9/month (subscription)</li>
-    </ul>
-  </div>
-
-
-  <div class="card">
-    <h2>Examples (before → after)</h2>
-    <p class="muted">Short, beginner-safe structure that reduces scope misunderstandings.</p>
-    <ul>
-      <li><b>VA / Admin</b>: messy job post → clear 2-phase plan + 3 questions</li>
-      <li><b>Web dev</b>: vague requirements → milestones + risk-reducing Phase 1</li>
-      <li><b>Data entry</b>: long description → bullets + deliverables + timeline</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>How it works (3 steps)</h2>
-    <ol>
-      <li>Open an Upwork job detail page</li>
-      <li>Click <b>Generate proposal</b></li>
-      <li>Copy & paste into your Upwork proposal</li>
-    </ol>
-  </div>
-
-
-  <div class="card">
-    <h2>Support</h2>
-    <p>Email: <a href="mailto:hszk410.dev@gmail.com">hszk410.dev@gmail.com</a></p>
-  </div>
-
-  
-  <div class="card">
-    <h2>FAQ</h2>
-    <ul>
-      <li><b>Does it send my job text to a server?</b> No — job content is processed locally in your browser.</li>
-      <li><b>What if extraction fails?</b> Paste the job description manually and generate anyway.</li>
-      <li><b>Paid but still Free?</b> Settings → Re-sync Pro (then re-enter license if needed).</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>Get the extension</h2>
-    <p><a class="button" href="https://chromewebstore.google.com/">Open Chrome Web Store</a></p>
-    <p class="muted">(Replace with the exact listing link once confirmed.)</p>
-  </div>
-
-<div class="card">
-    <h2>Links</h2>
-    <ul>
-      <li><a href="upgrade.html">Upgrade</a></li>
-      <li><a href="tokushoho.html">Specified Commercial Transactions Act (特定商取引法)</a></li>
-      <li><a href="help.html">Help</a></li>
-      <li><a href="template.html">Copy/paste template</a></li>
-      <li><a href="troubleshooting.html">Troubleshooting</a></li>
-    </ul>
-  </div>
-
-  <div class="card" id="privacy">
-    <h2>Privacy Policy (summary)</h2>
-    <p>
-      Job content is processed locally in the browser. We do not sell personal data.
-      Payment processing is handled by Stripe for the Pro subscription.
-    </p>
-    <p>
-      If you have questions, contact <a href="mailto:hszk410.dev@gmail.com">hszk410.dev@gmail.com</a>.
-    </p>
-  </div>
-
-  <p class="muted">Last updated: 2026-02-19</p>
+  <script>
+    // tiny progressive fade-in
+    const els = document.querySelectorAll('.fade-in');
+    requestAnimationFrame(() => {
+      els.forEach((el, i) => setTimeout(() => el.classList.add('is-in'), 40 * i));
+    });
+  </script>
 </body>
 </html>
