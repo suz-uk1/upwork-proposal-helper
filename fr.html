@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Upwork Proposal Helper (FR)</title>
+  <meta name="description" content="Générez des propositions Upwork prêtes à coller à partir des détails de l'annonce en quelques secondes (local-only)." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="card hero fade-in">
+      <div class="muted small">Extension Chrome • Abonnement (Pro) disponible</div>
+      <h1 class="h1" style="font-size:38px;">Des propositions Upwork claires, structurées et prêtes à coller.</h1>
+      <p class="muted">Extraire l'annonce → générer un plan en 2 phases + 3 questions max → copier/coller. Fonctionne localement dans votre navigateur.</p>
+      <div class="ctaRow">
+        <a class="btn" href="https://chromewebstore.google.com/">Installer (Chrome Web Store)</a>
+        <a class="btn btn--ghost" href="template.html">Modèle (EN)</a>
+      </div>
+      <div class="badges">
+        <span class="badge badge--ok">Local-only</span>
+        <span class="badge">Sans API externe</span>
+        <span class="badge badge--accent">3 questions max</span>
+        <span class="badge">Plan en 2 phases</span>
+      </div>
+      <p class="muted small" style="margin-top:8px;">(Nous mettrons à jour le lien CWS exact après confirmation.)</p>
+    </div>
+
+    <div class="card fade-in" style="margin-top:14px;">
+      <h2 class="h2">Comment ça marche (3 étapes)</h2>
+      <div class="steps">
+        <div class="step"><div class="stepNum">1</div><div>Ouvrez une annonce Upwork</div></div>
+        <div class="step"><div class="stepNum">2</div><div>Cliquez sur <b>Generate proposal</b></div></div>
+        <div class="step"><div class="stepNum">3</div><div>Copiez/collez dans votre proposition</div></div>
+      </div>
+      <hr class="sep" />
+      <p class="muted small">Si l'extraction échoue, collez la description manuellement et générez quand même.</p>
+    </div>
+
+    <div class="card fade-in" style="margin-top:14px;">
+      <h2 class="h2">Liens</h2>
+      <ul>
+        <li><a href="index.html">English</a></li>
+        <li><a href="es.html">Español</a></li>
+        <li><a href="pt-br.html">Português (Brasil)</a></li>
+        <li><a href="help.html">Help</a></li>
+        <li><a href="troubleshooting.html">Troubleshooting</a></li>
+      </ul>
+      <div class="muted small">Support : <a href="mailto:hszk410.dev@gmail.com">hszk410.dev@gmail.com</a></div>
+    </div>
+
+    <p class="muted small" style="margin-top:14px;">Last updated: 2026-02-22</p>
+  </div>
+  <script>
+    const els = document.querySelectorAll('.fade-in');
+    requestAnimationFrame(() => els.forEach((el,i)=>setTimeout(()=>el.classList.add('is-in'),40*i)));
+  </script>
+</body>
+</html>
