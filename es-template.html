@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Plantilla de propuesta | Upwork Proposal Helper</title>
+  <meta name="description" content="Plantilla (copiar/pegar) para propuestas de Upwork: plan en 2 fases + 3 preguntas máx." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="card hero fade-in">
+      <div class="muted small">Plantilla (ES)</div>
+      <h1 class="h1" style="font-size:38px;">Plantilla de propuesta para Upwork</h1>
+      <p class="muted">Estructura simple: lo que entendí → plan en 2 fases → 3 preguntas → siguiente paso.</p>
+      <div class="ctaRow">
+        <button class="btn" id="copyBtn" type="button">Copiar plantilla</button>
+        <a class="btn btn--ghost" href="es.html">Volver</a>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="margin-top:14px;">
+      <h2 class="h2">Plantilla</h2>
+      <pre class="template" id="tpl">¡Hola! Leí tu publicación para: [TÍTULO DEL TRABAJO]
+
+LO QUE ENTENDÍ
+- [punto]
+- [punto]
+- [punto]
+
+PLAN (2 fases)
+- Fase 1 (verificación rápida): confirmar alcance + entregar un borrador/demo funcional
+- Fase 2 (entrega): implementar + probar + notas de entrega
+
+3 PREGUNTAS RÁPIDAS (máx.)
+1) ¿Cuál es la métrica #1 de éxito?
+2) ¿Alguna restricción (stack, fecha límite, imprescindible vs opcional)?
+3) ¿Tienes ejemplos/diseños/contenido o debo proponer una estructura simple?
+
+SIGUIENTE PASO
+Si compartes enlaces/recursos, responderé con un plan de hitos concreto para la Fase 1 hoy.</pre>
+      <div class="muted small" id="copied" style="margin-top:10px;"></div>
+    </div>
+
+    <p class="muted small" style="margin-top:14px;">Last updated: 2026-02-22</p>
+  </div>
+
+  <script>
+    const tpl = document.getElementById('tpl');
+    const btn = document.getElementById('copyBtn');
+    const copied = document.getElementById('copied');
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(tpl.textContent);
+        copied.textContent = '¡Copiado!';
+        setTimeout(() => copied.textContent = '', 1500);
+      } catch (e) {
+        copied.textContent = 'No se pudo copiar. Selecciona el texto y copia manualmente.';
+      }
+    });
+    const els = document.querySelectorAll('.fade-in');
+    requestAnimationFrame(() => els.forEach((el,i)=>setTimeout(()=>el.classList.add('is-in'),40*i)));
+  </script>
+</body>
+</html>
