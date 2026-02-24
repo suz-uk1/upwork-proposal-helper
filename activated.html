@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Activated | Upwork Proposal Helper</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+    .keyBox{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+    .keyText{word-break:break-all}
+    .pillOk{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:6px 10px;border-radius:999px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.30)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card hero">
+      <div class="pillOk">Payment successful</div>
+      <h1 class="h1" style="margin-top:10px">Activated</h1>
+      <p class="muted">Next step: unlock Pro inside the extension.</p>
+
+      <hr class="sep" />
+
+      <h2 class="h2">Your license key</h2>
+      <p class="muted small">Keep this private. Do not share or post screenshots of your key.</p>
+
+      <div class="keyBox">
+        <div class="keyText mono" id="licenseKey">Loading…</div>
+        <button class="btn btn--ghost" id="copyBtn" type="button" disabled>Copy</button>
+      </div>
+      <p class="muted small" id="licenseHint" style="margin-top:8px"></p>
+
+      <hr class="sep" />
+
+      <h2 class="h2">Unlock Pro (1 minute)</h2>
+      <div class="steps">
+        <div class="step"><div class="stepNum">1</div><div>Open the extension → <b>Settings</b></div></div>
+        <div class="step"><div class="stepNum">2</div><div>Click <b>Enter license key</b> → paste your key</div></div>
+        <div class="step"><div class="stepNum">3</div><div>Click <b>Re-sync Pro</b></div></div>
+      </div>
+
+      <hr class="sep" />
+
+      <h2 class="h2">If you can’t find your key</h2>
+      <p class="muted">Email support and include your checkout email and approximate purchase time.</p>
+      <p>Email: <a href="mailto:hszk410.dev@gmail.com">hszk410.dev@gmail.com</a></p>
+
+      <p class="muted small">Last updated: 2026-02-24</p>
+    </div>
+  </div>
+
+  <script>
+    const ENTITLEMENT_API_BASE = "https://uph-entitlement.hszk410-biz.workers.dev";
+
+    function qs(name){
+      const u = new URL(window.location.href);
+      return u.searchParams.get(name);
+    }
+
+    async function load() {
+      const elKey = document.getElementById('licenseKey');
+      const elHint = document.getElementById('licenseHint');
+      const copyBtn = document.getElementById('copyBtn');
+
+      const sessionId = qs('session_id');
+      if (!sessionId) {
+        elKey.textContent = '(missing session_id)';
+        elHint.textContent = 'This page expects a Stripe session_id in the URL. Please contact support.';
+        return;
+      }
+
+      try {
+        // Planned endpoint: GET /license_by_session?session_id=...
+        const url = `${ENTITLEMENT_API_BASE}/license_by_session?session_id=${encodeURIComponent(sessionId)}`;
+        const res = await fetch(url, { method: 'GET' });
+        const data = await res.json().catch(() => null);
+
+        if (!res.ok || !data || data.ok !== true || !data.license) {
+          elKey.textContent = '(unable to load license key)';
+          elHint.textContent = 'If your key did not load, email support with your checkout email + approximate purchase time.';
+          return;
+        }
+
+        const license = String(data.license);
+        elKey.textContent = license;
+        copyBtn.disabled = false;
+        copyBtn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(license);
+            copyBtn.textContent = 'Copied';
+            setTimeout(() => (copyBtn.textContent = 'Copy'), 1200);
+          } catch {
+            // fallback
+            window.prompt('Copy your license key:', license);
+          }
+        });
+
+        elHint.textContent = 'Paste this key into the extension Settings.';
+      } catch (e) {
+        elKey.textContent = '(error)';
+        elHint.textContent = 'If your key did not load, email support with your checkout email + approximate purchase time.';
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
