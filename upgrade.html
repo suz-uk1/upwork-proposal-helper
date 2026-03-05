@@ -14,13 +14,31 @@
   </style>
 
   <script>
-    // Set this to the Stripe LIVE Payment Link URL when available.
-    // Example: https://buy.stripe.com/xxxx
-    const LIVE_PAYMENT_LINK_URL = "https://buy.stripe.com/7sY5kEdTq6V94gL64w53O00"; // <-- paste Stripe LIVE Payment Link URL here
-    if (LIVE_PAYMENT_LINK_URL) {
-      window.location.replace(LIVE_PAYMENT_LINK_URL);
+    // Set these to Stripe LIVE Payment Link URLs when available.
+    // These are public links (not secrets), but avoid pasting them in chat logs.
+    const LIVE_PAYMENT_LINK_MONTHLY = "https://buy.stripe.com/7sY5kEdTq6V94gL64w53O00";
+    const LIVE_PAYMENT_LINK_ANNUAL = "https://buy.stripe.com/aFadRaeXua7l8x1eB253O01";
+
+    function getPlan() {
+      const u = new URL(window.location.href);
+      return (u.searchParams.get("plan") || "monthly").toLowerCase();
+    }
+
+    function go(url) {
+      if (!url) return;
+      window.location.href = url;
+    }
+
+    // If plan is specified and the link exists, redirect immediately.
+    // Otherwise, show the page so the user can choose.
+    const plan = getPlan();
+    if (plan === "annual" && LIVE_PAYMENT_LINK_ANNUAL) {
+      go(LIVE_PAYMENT_LINK_ANNUAL);
+    } else if (plan === "monthly" && LIVE_PAYMENT_LINK_MONTHLY) {
+      go(LIVE_PAYMENT_LINK_MONTHLY);
     }
   </script>
+
 </head>
 <body>
   <h1>Upgrade to Pro</h1>
@@ -44,6 +62,18 @@
   </div>
 
   <div class="card">
+    <h2>Choose a plan</h2>
+    <p class="muted">Best value: Annual ($90/year — save 2 months vs monthly).</p>
+    <p>
+      <a id="monthlyBtn" class="button" href="?plan=monthly">Upgrade Monthly ($9/mo)</a>
+      <span style="display:inline-block;width:10px"></span>
+      <a id="annualBtn" class="button" href="?plan=annual" style="background:#0f766e">Upgrade Annual ($90/yr)</a>
+    </p>
+    <p class="muted">If payments are unavailable, these buttons will keep you on this page.</p>
+  </div>
+
+
+  <div class="card">
     <h2>What Pro includes</h2>
     <ul>
       <li>Unlimited generations</li>
@@ -58,6 +88,6 @@
     <p>Email: <a href="mailto:hszk410.dev@gmail.com">hszk410.dev@gmail.com</a></p>
   </div>
 
-  <p class="muted">Last updated: 2026-02-19</p>
+  <p class="muted">Last updated: 2026-03-03</p>
 </body>
 </html>
