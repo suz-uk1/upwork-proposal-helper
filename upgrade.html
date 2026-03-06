@@ -14,14 +14,56 @@
   </style>
 
   <script>
-    // Set these to Stripe LIVE Payment Link URLs when available.
-    // These are public links (not secrets), but avoid pasting them in chat logs.
+    // Stripe LIVE Payment Link URLs (public)
     const LIVE_PAYMENT_LINK_MONTHLY = "https://buy.stripe.com/7sY5kEdTq6V94gL64w53O00";
     const LIVE_PAYMENT_LINK_ANNUAL = "https://buy.stripe.com/aFadRaeXua7l8x1eB253O01";
+
+    // Event tracking (Cloudflare Worker)
+    const EVENT_API_BASE = "https://uph-events.hszk410-biz.workers.dev";
 
     function getPlan() {
       const u = new URL(window.location.href);
       return (u.searchParams.get("plan") || "monthly").toLowerCase();
+    }
+
+    function getAnonId() {
+      try {
+        const key = "uph_anon_id";
+        const existing = localStorage.getItem(key);
+        if (existing) return existing;
+        const id = (crypto && "randomUUID" in crypto) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
+        localStorage.setItem(key, id);
+        return id;
+      } catch {
+        return "";
+      }
+    }
+
+    function sendEvent(event_name, plan, meta) {
+      try {
+        const payload = {
+          event_name,
+          plan: plan || "unknown",
+          anon_id: getAnonId(),
+          ts: Date.now(),
+          meta: meta || {}
+        };
+
+        // Fire-and-forget. Keep it simple + resilient.
+        if (navigator.sendBeacon) {
+          const blob = new Blob([JSON.stringify(payload)], { type: "application/json" });
+          navigator.sendBeacon(EVENT_API_BASE + "/event", blob);
+        } else {
+          fetch(EVENT_API_BASE + "/event", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(payload),
+            keepalive: true
+          }).catch(() => {});
+        }
+      } catch {
+        // ignore
+      }
     }
 
     function go(url) {
@@ -29,12 +71,17 @@
       window.location.href = url;
     }
 
-    // If plan is specified and the link exists, redirect immediately.
-    // Otherwise, show the page so the user can choose.
     const plan = getPlan();
+    // Track page open.
+    sendEvent("upgrade_open", plan, { mode: "load" });
+
+    // If plan is specified and the link exists, redirect immediately.
+    // (We still send an event first; redirect may happen quickly.)
     if (plan === "annual" && LIVE_PAYMENT_LINK_ANNUAL) {
+      sendEvent("checkout_click", "annual", { mode: "auto" });
       go(LIVE_PAYMENT_LINK_ANNUAL);
     } else if (plan === "monthly" && LIVE_PAYMENT_LINK_MONTHLY) {
+      sendEvent("checkout_click", "monthly", { mode: "auto" });
       go(LIVE_PAYMENT_LINK_MONTHLY);
     }
   </script>
@@ -65,9 +112,9 @@
     <h2>Choose a plan</h2>
     <p class="muted">Best value: Annual ($90/year — save 2 months vs monthly).</p>
     <p>
-      <a id="monthlyBtn" class="button" href="?plan=monthly">Upgrade Monthly ($9/mo)</a>
+      <a id="monthlyBtn" class="button" href="?plan=monthly" onclick="try{sendEvent('checkout_click','monthly',{mode:'click'})}catch(e){}">Upgrade Monthly ($9/mo)</a>
       <span style="display:inline-block;width:10px"></span>
-      <a id="annualBtn" class="button" href="?plan=annual" style="background:#0f766e">Upgrade Annual ($90/yr)</a>
+      <a id="annualBtn" class="button" href="?plan=annual" style="background:#0f766e" onclick="try{sendEvent('checkout_click','annual',{mode:'click'})}catch(e){}">Upgrade Annual ($90/yr)</a>
     </p>
     <p class="muted">If payments are unavailable, these buttons will keep you on this page.</p>
   </div>
