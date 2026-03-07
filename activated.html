@@ -53,6 +53,45 @@
 
   <script>
     const ENTITLEMENT_API_BASE = "https://uph-entitlement.hszk410-biz.workers.dev";
+    const EVENT_API_BASE = "https://uph-events.hszk410-biz.workers.dev";
+
+    function getAnonId() {
+      try {
+        const key = "uph_anon_id";
+        const existing = localStorage.getItem(key);
+        if (existing) return existing;
+        const id = (crypto && "randomUUID" in crypto) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
+        localStorage.setItem(key, id);
+        return id;
+      } catch {
+        return "";
+      }
+    }
+
+    function sendEvent(event_name, plan, meta) {
+      try {
+        const payload = {
+          event_name,
+          plan: plan || "unknown",
+          anon_id: getAnonId(),
+          ts: Date.now(),
+          meta: meta || {}
+        };
+        if (navigator.sendBeacon) {
+          const blob = new Blob([JSON.stringify(payload)], { type: "application/json" });
+          navigator.sendBeacon(EVENT_API_BASE + "/event", blob);
+        } else {
+          fetch(EVENT_API_BASE + "/event", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(payload),
+            keepalive: true
+          }).catch(() => {});
+        }
+      } catch {
+        // ignore
+      }
+    }
 
     function qs(name){
       const u = new URL(window.location.href);
@@ -85,6 +124,8 @@
 
         const license = String(data.license);
         elKey.textContent = license;
+        // Count successful license retrieval as paid activation.
+        sendEvent("paid_license_issued", "unknown", { source: "license_by_session" });
         copyBtn.disabled = false;
         copyBtn.addEventListener('click', async () => {
           try {
